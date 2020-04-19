@@ -7,7 +7,8 @@
     "module": "dist/index.module.js",
     "unpkg": "dist/index.umd.js",
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "registry": "https://npm.pkg.github.com/"
     },
     "scripts": {
         "test": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' mocha -r ts-node/register -r tsconfig-paths/register ./test/**/*.ts",
@@ -15,7 +16,8 @@
         "commit": "git-cz",
         "prettier": "prettier --write \"./{src,tests}/**/*.ts\"",
         "build": "rimraf ./dist && microbundle",
-        "dev": "microbundle watch"
+        "dev": "microbundle watch",
+        "release": "standard-version"
     },
     "config": {
         "commitizen": {
@@ -40,6 +42,7 @@
         "prettier": "^2.0.4",
         "pretty-quick": "^2.0.1",
         "rimraf": "^3.0.2",
+        "standard-version": "^7.1.0",
         "ts-node": "^8.8.2",
         "tsconfig-paths": "^3.9.0",
         "typescript": "^3.8.3"
