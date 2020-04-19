@@ -38,7 +38,7 @@ export class EntityValidator {
                         groups.some((validationGroup: string) => configGroup === validationGroup)
                     );
                 if (shouldCheckGroups && !shouldValidate) {
-                    return;
+                    return [];
                 }
 
                 const result = this.validate(entity, config, options);
