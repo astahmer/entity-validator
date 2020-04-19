@@ -1,0 +1,58 @@
+{
+    "name": "@nqp/entity-validator",
+    "version": "0.1.0",
+    "description": "Entity(Class) level validator based on class-validator interfaces",
+    "source": "src/index.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.module.js",
+    "unpkg": "dist/index.umd.js",
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "commit": "git-cz",
+        "prettier": "prettier --write \"./{src,tests}/**/*.ts\"",
+        "build": "rimraf ./dist && microbundle",
+        "dev": "microbundle watch"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "dependencies": {
+        "reflect-metadata": "^0.1.13"
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+        "class-validator": "^0.12.1",
+        "commitizen": "^4.0.4",
+        "cz-conventional-changelog": "^3.1.0",
+        "husky": "^4.2.5",
+        "microbundle": "^0.12.0-next.8",
+        "prettier": "^2.0.4",
+        "pretty-quick": "^2.0.1",
+        "rimraf": "^3.0.2",
+        "typescript": "^3.8.3"
+    },
+    "author": "Alexandre Stahmer <alexandre.stahmer@gmail.com>",
+    "license": "ISC",
+    "keywords": [
+        "entity",
+        "class",
+        "level",
+        "validator",
+        "class-validator",
+        "node",
+        "typescript",
+        "ts",
+        "js",
+        "decorator",
+        "custom"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/astahmer/entity-validator.git"
+    }
+}
