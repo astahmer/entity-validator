@@ -7,16 +7,37 @@ import {
 } from "@/EntityValidator";
 import { registerEntityDecorator } from "@/decorator";
 import { NonFunctionKeys } from "$/sample/common";
+import { getConnection } from "typeorm";
 
 class IsUniqueValidator<T extends AbstractEntity> implements EntityValidatorConstraintInterface<T> {
     async validate(item: T, args: EntityValidationArguments<T, IsUniqueData<T>>) {
         const fields = args.data.fields;
-        const store = args.context?.store as T[];
-        if (!store) return;
+        const repository = getConnection().getRepository(args.object);
+        const metadata = repository.metadata;
+        const query = repository.createQueryBuilder(args.targetName).select(args.targetName + ".id");
 
-        const entity = store.find((entity) => fields.every((field) => entity[field] === item[field]));
+        let usedFields = 0;
+        let i = 0;
+        for (i; i < fields.length; i++) {
+            const prop = fields[i];
+            const isRelation = metadata.findRelationWithPropertyPath(prop as string);
 
-        return !entity;
+            const paramName = isRelation ? prop + "Id" : prop;
+            const value = typeof item[prop] === "object" ? ((item[prop] as any) as AbstractEntity).id : item[prop];
+            if (!value) continue;
+            usedFields++;
+
+            query.andWhere(`${args.targetName}.${prop} = :${paramName}`, { [paramName]: value });
+        }
+
+        // If not all fields were used for a where condition, then there is no need to check for unicity
+        if (usedFields !== fields.length) {
+            return true;
+        }
+
+        const result = await query.getOne();
+
+        return !result;
     }
 }
 
